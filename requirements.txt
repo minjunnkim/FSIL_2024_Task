@@ -1,0 +1,9 @@
+sec_edgar_downloader
+beautifulsoup4
+lxml
+matplotlib
+transformers
+torch
+scikit-learn
+numpy
+community

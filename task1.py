@@ -278,7 +278,7 @@ def analyze_sentiments(text):
 
     return sentiment, score
 
-def analyze_company_data():
+def analyze_company_data(company):
     """ 
     Analyze sentiment across multiple texts, organizing by company and year."
 
@@ -299,27 +299,28 @@ def analyze_company_data():
     
     key_items = ['item 1. ', 'item 1a. ', 'item 7. ', 'item 7a. ', 'item 9. ', 'item 9a. ' ]
 
-    for company, years_items in companies_dict.items():
-        results[company] = {}
+    # for company, years_items in companies_dict.items():
+    years_items = companies_dict[company]
+    results[company] = {}
 
-        for year, items in years_items.items():
-            combined_confidence = []
+    for year, items in years_items.items():
+        combined_confidence = []
 
-            for item in key_items:
-                item_content = items.get(item, '')
-                if 'None.' not in item_content:
-                    sentiment, confidence = analyze_sentiments(item_content)
-                    print("Before: " + sentiment + " " + str(confidence))
-                    confidence *= -1 if sentiment == 'NEGATIVE' else 1
-                    print("After: " + sentiment + " " + str(confidence))
-                    combined_confidence.append(confidence)
+        for item in key_items:
+            item_content = items.get(item, '')
+            if 'None.' not in item_content:
+                sentiment, confidence = analyze_sentiments(item_content)
+                print("Before: " + sentiment + " " + str(confidence))
+                confidence *= -1 if sentiment == 'NEGATIVE' else 1
+                print("After: " + sentiment + " " + str(confidence))
+                combined_confidence.append(confidence)
 
-            average_confidence = sum(combined_confidence) / len(combined_confidence)
-            results[company][year] = average_confidence
+        average_confidence = sum(combined_confidence) / len(combined_confidence)
+        results[company][year] = average_confidence
             
     return results
 
-def visualize_sentiments(results):
+def visualize_sentiments(company, results):
     """
     Visualize the sentiment analysis results.
 
@@ -327,23 +328,24 @@ def visualize_sentiments(results):
     Args:
         results (dict): dictionary containing sentiment analysis scores
     """
-    for company, data in results.items():
-        fig, ax = plt.subplots(figsize=(15,4))
+    #for company, data in results.items():
+    data = results[company]
+    fig, ax = plt.subplots(figsize=(15,4))
 
-        years = list(data.keys())
-        years.sort()
-        print(years)
-        
-        #sentiments = [1 if data[year][0] == 'POSITIVE' else -1 for year in years]
-        confidences = [data[year] for year in years]
-        
-        plt.plot(years, confidences, label=f'{company} Sentiment', marker='o', linestyle='-', color='blue')
-        plt.title(f'Yearly Sentiment Analysis for {company}')
-        plt.xlabel('Year')
-        plt.ylabel('Sentiment Score (Confidence Weighted)')
-        plt.grid(True)
-        plt.legend()
-        return fig
+    years = list(data.keys())
+    years.sort()
+    print(years)
+    
+    #sentiments = [1 if data[year][0] == 'POSITIVE' else -1 for year in years]
+    confidences = [data[year] for year in years]
+    
+    plt.plot(years, confidences, label=f'{company} Sentiment', marker='o', linestyle='-', color='blue')
+    plt.title(f'Yearly Sentiment Analysis for {company}')
+    plt.xlabel('Year')
+    plt.ylabel('Sentiment Score (Confidence Weighted)')
+    plt.grid(True)
+    plt.legend()
+    return fig
 
 # results = analyze_company_data()
 # visualize_sentiments(results)
@@ -500,7 +502,7 @@ Tracks specific keywords or phrases relevant to interests over time, which can b
 emerging trends or shifting focuses without needing to process the entire content deeply
 """
 
-def keyword_tracking(keywords):
+def keyword_tracking(company, keywords):
     """
     Keyword Tracking
 
@@ -511,30 +513,33 @@ def keyword_tracking(keywords):
     results = {company: {keyword: [] for keyword in keywords} for company in companies_dict}
     
     # Collect counts for each keyword by year
-    for company, years_data in companies_dict.items():
-        for year, data in years_data.items():
-            content = " ".join(data.values()) 
-            content = content.lower()  
-            for keyword in keywords:
-                count = content.count(keyword.lower())
-                results[company][keyword].append((int(year), count)) 
+    # for company, years_data in companies_dict.items():
+    years_data = companies_dict[company]
+
+    for year, data in years_data.items():
+        content = " ".join(data.values()) 
+        content = content.lower()  
+        for keyword in keywords:
+            count = content.count(keyword.lower())
+            results[company][keyword].append((int(year), count)) 
 
     # Plotting results
-    for company, keywords_data in results.items():
-        fig, ax = plt.subplot(figsize=(15, 4))
-        for keyword, counts in keywords_data.items():
-            counts.sort() 
-            years = [year for year, count in counts]
-            values = [count for year, count in counts]
-            plt.plot(years, values, marker='o', label=f'{keyword}')
+    # for company, keywords_data in results.items():
+    keywords_data = results[company]
+    fig, ax = plt.subplot(figsize=(15, 4))
+    for keyword, counts in keywords_data.items():
+        counts.sort() 
+        years = [year for year, count in counts]
+        values = [count for year, count in counts]
+        plt.plot(years, values, marker='o', label=f'{keyword}')
 
-        plt.title(f'Keyword Frequency Over Time for {company}')
-        plt.xlabel('Year')
-        plt.ylabel('Count')
-        plt.legend()
-        plt.grid(True)
-        return fig
-        plt.show()
+    plt.title(f'Keyword Frequency Over Time for {company}')
+    plt.xlabel('Year')
+    plt.ylabel('Count')
+    plt.legend()
+    plt.grid(True)
+    return fig
+    plt.show()
 
 # keywords = ['cybersecurity', 'data privacy', 'sustainability']
 # keyword_tracking(keywords)
@@ -545,17 +550,18 @@ Section Length Over Time
 Visualizes the length of desired section over time
 """
 
-def visualize_section_length(item_key):
-    for company, years_data in companies_dict.items():
-        years = sorted(years_data.keys())
-        lengths = [len(years_data[year][item_key]) if item_key in years_data[year] else 0 for year in years]
+def visualize_section_length(company, item_key):
+    #for company, years_data in companies_dict.items():
+    years_data = companies_dict[company]
+    years = sorted(years_data.keys())
+    lengths = [len(years_data[year][item_key]) if item_key in years_data[year] else 0 for year in years]
 
-        fig, ax = plt.subplot(figsize=(15, 5))
-        plt.bar(years, lengths, color='skyblue')
-        plt.title(f'Length of {item_key} over time for {company}')
-        plt.xlabel('Year')
-        plt.ylabel('Character Count')
-        return fig
-        plt.show()
+    fig, ax = plt.subplot(figsize=(15, 5))
+    plt.bar(years, lengths, color='skyblue')
+    plt.title(f'Length of {item_key} over time for {company}')
+    plt.xlabel('Year')
+    plt.ylabel('Character Count')
+    return fig
+    plt.show()
 
 # visualize_section_length('item 1a. ')

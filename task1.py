@@ -43,6 +43,8 @@ def download_10k(company):
     Args:
         company (String): company ticker
     """
+    dl = Downloader("Minjun", "ckandrew04@gmail.com")
+
     dl.get("10-K", company)
 
 #########################################################
@@ -341,10 +343,10 @@ def visualize_sentiments(results):
         plt.ylabel('Sentiment Score (Confidence Weighted)')
         plt.grid(True)
         plt.legend()
-        plt.show()
+        return fig
 
-results = analyze_company_data()
-visualize_sentiments(results)
+# results = analyze_company_data()
+# visualize_sentiments(results)
 
 """
 Trend Analysis
@@ -519,7 +521,7 @@ def keyword_tracking(keywords):
 
     # Plotting results
     for company, keywords_data in results.items():
-        plt.figure(figsize=(10, 5))
+        fig, ax = plt.subplot(figsize=(15, 4))
         for keyword, counts in keywords_data.items():
             counts.sort() 
             years = [year for year, count in counts]
@@ -531,10 +533,11 @@ def keyword_tracking(keywords):
         plt.ylabel('Count')
         plt.legend()
         plt.grid(True)
+        return fig
         plt.show()
 
-keywords = ['cybersecurity', 'data privacy', 'sustainability']
-keyword_tracking(keywords)
+# keywords = ['cybersecurity', 'data privacy', 'sustainability']
+# keyword_tracking(keywords)
 
 """
 Section Length Over Time
@@ -547,11 +550,12 @@ def visualize_section_length(item_key):
         years = sorted(years_data.keys())
         lengths = [len(years_data[year][item_key]) if item_key in years_data[year] else 0 for year in years]
 
-        plt.figure(figsize=(15, 5))
+        fig, ax = plt.subplot(figsize=(15, 5))
         plt.bar(years, lengths, color='skyblue')
         plt.title(f'Length of {item_key} over time for {company}')
         plt.xlabel('Year')
         plt.ylabel('Character Count')
+        return fig
         plt.show()
 
-visualize_section_length('item 1a. ')
+# visualize_section_length('item 1a. ')

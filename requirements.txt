@@ -6,4 +6,6 @@ transformers
 torch
 scikit-learn
 numpy
-community
+streamlit
+networkx
+nltk

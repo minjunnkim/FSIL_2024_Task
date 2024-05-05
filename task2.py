@@ -1,6 +1,4 @@
 import streamlit as st
-from sec_edgar_downloader import Downloader
-import os
 from task1 import download_10k, keyword_tracking, visualize_section_length, analyze_company_data, visualize_sentiments
 
 def main():
@@ -25,11 +23,11 @@ def main():
         if analysis_type == 'Keyword Tracking':
             keywords = st.text_input("Enter keywords separated by commas", "cybersecurity, data privacy, sustainability")
             keyword_list = [keyword.strip() for keyword in keywords.split(',')]
-            fig = keyword_tracking(company, keyword_list) 
+            fig = keyword_tracking(keyword_list) 
             st.pyplot(fig)
         elif analysis_type == 'Visualize Section Length':
             item_key = st.text_input("Enter the item key", "item 1a.")
-            fig = visualize_section_length(company, item_key) 
+            fig = visualize_section_length(item_key) 
             st.pyplot(fig)
         elif analysis_type == 'Sentiment Analysis':
             results = analyze_company_data()

@@ -26,7 +26,7 @@ def main():
             fig = keyword_tracking(keyword_list) 
             st.pyplot(fig)
         elif analysis_type == 'Visualize Section Length':
-            item_key = st.text_input("Enter the item key", "item 1a.")
+            item_key = st.text_input("Enter the item key", "item 1a. ")
             fig = visualize_section_length(item_key) 
             st.pyplot(fig)
         elif analysis_type == 'Sentiment Analysis':

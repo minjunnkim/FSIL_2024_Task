@@ -1,8 +1,6 @@
 # FSIL_2024_Task
 
-The application can be accessed online at,
-
-[text](https://fsil2024task.streamlit.app/)
+The application can be accessed online at, [10-K Filing Analysis App](https://fsil2024task.streamlit.app/)
 
 ## Why Streamlit?
 

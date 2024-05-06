@@ -345,7 +345,7 @@ def visualize_sentiments(company, results):
     plt.ylabel('Sentiment Score (Confidence Weighted)')
     plt.grid(True)
     plt.legend()
-    return fig
+    return plt.gcf()
 
 # results = analyze_company_data()
 # visualize_sentiments(results)
@@ -538,7 +538,7 @@ def keyword_tracking(company, keywords):
     plt.ylabel('Count')
     plt.legend()
     plt.grid(True)
-    return fig
+    return plt.gcf()
     plt.show()
 
 # keywords = ['cybersecurity', 'data privacy', 'sustainability']
@@ -561,7 +561,7 @@ def visualize_section_length(company, item_key):
     plt.title(f'Length of {item_key} over time for {company}')
     plt.xlabel('Year')
     plt.ylabel('Character Count')
-    return fig
+    return plt.gcf()
     plt.show()
 
 # visualize_section_length('item 1a. ')

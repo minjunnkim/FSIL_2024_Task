@@ -1,5 +1,9 @@
 # FSIL_2024_Task
 
+The application can be accessed online at,
+
+[text](https://fsil2024task.streamlit.app/)
+
 ## Why Streamlit?
 
 I used streamlit because I had just used this in another project, and found that it is easy to display matplotlib figures in it. It is the simplest I thought of.

@@ -27,7 +27,7 @@ def main():
             fig = visualize_section_length(company, item_key) 
             st.pyplot(fig)
         elif analysis_type == 'Sentiment Analysis':
-            results = analyze_company_data()
+            results = analyze_company_data(company)
             fig = visualize_sentiments(company, results)
             st.pyplot(fig)
 

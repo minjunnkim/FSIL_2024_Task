@@ -197,8 +197,8 @@ def save_document(content, save_path):
 
 companies_dict = {}
 
-# Process each company's filings
-for company in companies:
+def company_process(company):
+    # Process a company's filings
     company_path = os.path.join("sec-edgar-filings", company, "10-K")    
     companies_dict[company] = {}
     for root, dirs, files in os.walk(company_path):
@@ -215,7 +215,7 @@ for company in companies:
             document = clean_and_format_html(document)
             
             cleaned_root = "cleaned-" + root
-            cleaned_path = os.path.join(cleaned_root, '10k_cleaned.txt')
+            # cleaned_path = os.path.join(cleaned_root, '10k_cleaned.txt')
             # os.makedirs(cleaned_root)
             # save_document(document, cleaned_path)
             

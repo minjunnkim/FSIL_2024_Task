@@ -38,7 +38,7 @@ elif analysis_type == 'Visualize Section Length':
         company_process(company)
         fig = visualize_section_length(company, item_key) 
         st.pyplot(fig)
-elif analysis_type == 'Sentiment Analysis':
+elif analysis_type == 'Sentiment Analysis (Uses Items 1, 1A, 7, 7A, 9, and 9A)':
     if st.button('Analyze'):
         company_process(company)
         results = analyze_company_data(company)

@@ -32,21 +32,6 @@ companies = ["META", "AAPL", "MSFT", "AMZN", "GOOGL"]
 for company in companies:
     dl.get("10-K", company)
 
-"""
-Function for Task 2
-"""
-
-def download_10k(company):
-    """
-    Helper function that downloads the desired company ticker's 10-K Filings
-
-    Args:
-        company (String): company ticker
-    """
-    dl = Downloader("Minjun", "ckandrew04@gmail.com")
-
-    dl.get("10-K", company)
-
 #########################################################
 
 """
@@ -190,14 +175,27 @@ def deeper_clean_text(text):
 
     return text
 
-# Function to see progress through saved files. Not necessary for final product but nice to have
 def save_document(content, save_path):
+    """
+    Function to see progress through saved files
+    Not necessary for final product but nice to have for debug
+
+    Args:
+        content (String): content text
+        save_path (String): save path
+    """
     with open(save_path, 'w', encoding='utf-8') as file:
         file.write(content)
 
 companies_dict = {}
 
 def company_process(company):
+    """
+    Processes the current given company
+
+    Args:
+        company (String): current given company
+    """
     # Process a company's filings
     company_path = os.path.join("sec-edgar-filings", company, "10-K")    
     companies_dict[company] = {}
@@ -310,9 +308,9 @@ def analyze_company_data(company):
             item_content = items.get(item, '')
             if 'None.' not in item_content:
                 sentiment, confidence = analyze_sentiments(item_content)
-                print("Before: " + sentiment + " " + str(confidence))
+                # print("Before: " + sentiment + " " + str(confidence))
                 confidence *= -1 if sentiment == 'NEGATIVE' else 1
-                print("After: " + sentiment + " " + str(confidence))
+                # print("After: " + sentiment + " " + str(confidence))
                 combined_confidence.append(confidence)
 
         average_confidence = sum(combined_confidence) / len(combined_confidence)
@@ -327,6 +325,9 @@ def visualize_sentiments(company, results):
 
     Args:
         results (dict): dictionary containing sentiment analysis scores
+
+    Return:
+        Figure: figure for streamlit to plot
     """
     #for company, data in results.items():
     data = results[company]
@@ -508,6 +509,9 @@ def keyword_tracking(company, keywords):
 
     Args:
         keywords (list(str)): keywords
+
+    Returns:
+        Figure: figure for streamlit to plot
     """
     # Initialize results dictionary
     results = {company: {keyword: [] for keyword in keywords} for company in companies_dict}
@@ -551,6 +555,16 @@ Visualizes the length of desired section over time
 """
 
 def visualize_section_length(company, item_key):
+    """
+    Visualization function for Section Length Over Time
+
+    Args:
+        company (String): company
+        item_key (String): desried item
+
+    Returns:
+        Figure: figure for streamlit to plot
+    """
     #for company, years_data in companies_dict.items():
     years_data = companies_dict[company]
     years = sorted(years_data.keys())

@@ -1,5 +1,5 @@
 import streamlit as st
-from task1 import company_process, keyword_tracking, visualize_section_length, analyze_company_data, visualize_sentiments
+from .task1 import company_process, keyword_tracking, visualize_section_length, analyze_company_data, visualize_sentiments
 
 def main():
     st.title('10-K Filing Analysis App')

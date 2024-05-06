@@ -330,7 +330,7 @@ def visualize_sentiments(company, results):
     """
     #for company, data in results.items():
     data = results[company]
-    fig, ax = plt.subplots()
+    fig = plt.figure(figsize=(15,4))
 
     years = list(data.keys())
     years.sort()
@@ -345,7 +345,7 @@ def visualize_sentiments(company, results):
     plt.ylabel('Sentiment Score (Confidence Weighted)')
     plt.grid(True)
     plt.legend()
-    return plt.gcf()
+    return fig
 
 # results = analyze_company_data()
 # visualize_sentiments(results)
@@ -526,7 +526,7 @@ def keyword_tracking(company, keywords):
     # Plotting results
     # for company, keywords_data in results.items():
     keywords_data = results[company]
-    fig, ax = plt.subplot()
+    fig = plt.figure(figsize=(15,4))
     for keyword, counts in keywords_data.items():
         counts.sort() 
         years = [year for year, count in counts]
@@ -538,7 +538,7 @@ def keyword_tracking(company, keywords):
     plt.ylabel('Count')
     plt.legend()
     plt.grid(True)
-    return plt.gcf()
+    return fig
     plt.show()
 
 # keywords = ['cybersecurity', 'data privacy', 'sustainability']
@@ -556,12 +556,12 @@ def visualize_section_length(company, item_key):
     years = sorted(years_data.keys())
     lengths = [len(years_data[year][item_key]) if item_key in years_data[year] else 0 for year in years]
 
-    fig, ax = plt.subplot()
+    fig = plt.figure(figsize=(15,4))
     plt.bar(years, lengths, color='skyblue')
     plt.title(f'Length of {item_key} over time for {company}')
     plt.xlabel('Year')
     plt.ylabel('Character Count')
-    return plt.gcf()
+    return fig
     plt.show()
 
 # visualize_section_length('item 1a. ')

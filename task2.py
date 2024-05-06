@@ -9,8 +9,6 @@ company = st.selectbox(
     index=0
 )
 
-company_process(company)
-
 analysis_type = st.selectbox(
     "Select Analysis Type",
     ['Keyword Tracking', 'Visualize Section Length', 'Sentiment Analysis'],
@@ -22,16 +20,19 @@ if analysis_type == 'Keyword Tracking':
     keyword_list = [keyword.strip() for keyword in keywords.split(',')]
 
     if st.button('Analyze'):
+        company_process(company)
         fig = keyword_tracking(company, keyword_list) 
         st.pyplot(fig)
 elif analysis_type == 'Visualize Section Length':
     item_key = st.text_input("Enter the item key", "item 1a. ")
 
     if st.button('Analyze'):
+        company_process(company)
         fig = visualize_section_length(company, item_key) 
         st.pyplot(fig)
 elif analysis_type == 'Sentiment Analysis':
     if st.button('Analyze'):
+        company_process(company)
         results = analyze_company_data(company)
         fig = visualize_sentiments(company, results)
         st.pyplot(fig)

@@ -358,49 +358,49 @@ WARNING: This is an extremely costly function and may take hours to finish
 Not tested out yet for longer texts -- runtime too long
 """
 
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+# from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-model_name = "facebook/bart-large-cnn"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+# model_name = "facebook/bart-large-cnn"
+# tokenizer = AutoTokenizer.from_pretrained(model_name)
+# model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
-def advanced_summarize(text):
-    """
-    Summarizer
+# def advanced_summarize(text):
+#     """
+#     Summarizer
 
-    Args:
-        text (String): text to summarize
+#     Args:
+#         text (String): text to summarize
 
-    Returns:
-        String: summarized text
-    """
-    parts = [text[i:i+1024] for i in range(0, len(text), 1024)]
-    summaries = []
-    for part in parts:
-        input_ids = tokenizer(part, return_tensors="pt", truncation=True, max_length=1024)['input_ids']
-        output = model.generate(input_ids, max_length=150, min_length=40, length_penalty=2.0, num_beams=4, early_stopping=True)
-        summary = tokenizer.decode(output[0], skip_special_tokens=True)
-        summaries.append(summary)
-    return ' '.join(summaries)
+#     Returns:
+#         String: summarized text
+#     """
+#     parts = [text[i:i+1024] for i in range(0, len(text), 1024)]
+#     summaries = []
+#     for part in parts:
+#         input_ids = tokenizer(part, return_tensors="pt", truncation=True, max_length=1024)['input_ids']
+#         output = model.generate(input_ids, max_length=150, min_length=40, length_penalty=2.0, num_beams=4, early_stopping=True)
+#         summary = tokenizer.decode(output[0], skip_special_tokens=True)
+#         summaries.append(summary)
+#     return ' '.join(summaries)
 
-def trend_analysis(item_key):
-    """
-    Trend Analysis
+# def trend_analysis(item_key):
+#     """
+#     Trend Analysis
 
-    Args:
-        item_key (String): the item to analyze
-    """
-    for company, years_data in companies_dict.items():
-        print(f"\nTrend Analysis for {company} - {item_key}")
-        for year, data in years_data.items():
-            if item_key in data and data[item_key]:
-                try:
-                    summary = advanced_summarize(data[item_key])
-                    print(f"{year} Summary: {summary}")
-                except Exception as e:
-                    print(f"Error processing {year} data for {company}: {str(e)}")
-            else:
-                print(f"{year} Summary: No data available.")
+#     Args:
+#         item_key (String): the item to analyze
+#     """
+#     for company, years_data in companies_dict.items():
+#         print(f"\nTrend Analysis for {company} - {item_key}")
+#         for year, data in years_data.items():
+#             if item_key in data and data[item_key]:
+#                 try:
+#                     summary = advanced_summarize(data[item_key])
+#                     print(f"{year} Summary: {summary}")
+#                 except Exception as e:
+#                     print(f"Error processing {year} data for {company}: {str(e)}")
+#             else:
+#                 print(f"{year} Summary: No data available.")
 
 # trend_analysis('item 10. ')
 
@@ -412,82 +412,82 @@ WARNING: This is an extremely costly function and may take up to 10 minutes to f
 Tested at threshold = 1 -- Network too messy
 """
 
-import re
-import matplotlib.pyplot as plt
-import networkx as nx
-from nltk.tokenize import word_tokenize
-from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
+# import re
+# import matplotlib.pyplot as plt
+# import networkx as nx
+# from nltk.tokenize import word_tokenize
+# from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 
-# Adding custom stopwords
-custom_stopwords = set(['may', 'company', 'also', 'could', 'would'])
-stopwords = ENGLISH_STOP_WORDS.union(custom_stopwords)
+# # Adding custom stopwords
+# custom_stopwords = set(['may', 'company', 'also', 'could', 'would'])
+# stopwords = ENGLISH_STOP_WORDS.union(custom_stopwords)
 
-def preprocess_text(text):
-    """
-    Lowercase, remove punctuation, and tokenize text.
+# def preprocess_text(text):
+#     """
+#     Lowercase, remove punctuation, and tokenize text.
 
-    Args:
-        text (String): text
+#     Args:
+#         text (String): text
 
-    Returns:
-        String: preprocessed text
-    """
-    text = re.sub(r'[^\w\s]', '', text.lower()) 
-    tokens = [word for word in word_tokenize(text) if word not in stopwords]
-    return tokens
+#     Returns:
+#         String: preprocessed text
+#     """
+#     text = re.sub(r'[^\w\s]', '', text.lower()) 
+#     tokens = [word for word in word_tokenize(text) if word not in stopwords]
+#     return tokens
 
-def build_network(item_key='item 1a. '):
-    """
-    Build Network
+# def build_network(item_key='item 1a. '):
+#     """
+#     Build Network
 
-    Args:
-        item_key (str, optional): desired item. Defaults to 'item 1a. '.
+#     Args:
+#         item_key (str, optional): desired item. Defaults to 'item 1a. '.
 
-    Returns:
-        Graph() : Graph
-    """
-    G = nx.Graph()
+#     Returns:
+#         Graph() : Graph
+#     """
+#     G = nx.Graph()
     
-    for company, years_data in companies_dict.items():
-        for year, data in years_data.items():
-            if item_key in data:
-                text = data[item_key]
-                tokens = preprocess_text(text)
-                unique_tokens = set(tokens)  
+#     for company, years_data in companies_dict.items():
+#         for year, data in years_data.items():
+#             if item_key in data:
+#                 text = data[item_key]
+#                 tokens = preprocess_text(text)
+#                 unique_tokens = set(tokens)  
 
-                # Add nodes and edges between all unique tokens in this section
-                for token1 in unique_tokens:
-                    for token2 in unique_tokens:
-                        if token1 != token2:
-                            if G.has_edge(token1, token2):
-                                G[token1][token2]['weight'] += 1
-                            else:
-                                G.add_edge(token1, token2, weight=1)
+#                 # Add nodes and edges between all unique tokens in this section
+#                 for token1 in unique_tokens:
+#                     for token2 in unique_tokens:
+#                         if token1 != token2:
+#                             if G.has_edge(token1, token2):
+#                                 G[token1][token2]['weight'] += 1
+#                             else:
+#                                 G.add_edge(token1, token2, weight=1)
     
-    return G
+#     return G
 
-def visualize_network(G, threshold=2):
-    """
-    Visualize the network with an optional threshold for edge weights.
+# def visualize_network(G, threshold=2):
+#     """
+#     Visualize the network with an optional threshold for edge weights.
 
-    Args:
-        G (Graph()): Graph
-        threshold (int, optional): threshold for the network. Higher up means stronger connections Defaults to 2.
-    """
-    plt.figure(figsize=(12, 12))
-    pos = nx.spring_layout(G, k=0.1)  
+#     Args:
+#         G (Graph()): Graph
+#         threshold (int, optional): threshold for the network. Higher up means stronger connections Defaults to 2.
+#     """
+#     plt.figure(figsize=(12, 12))
+#     pos = nx.spring_layout(G, k=0.1)  
 
-    # Draw nodes and edges with weights above threshold
-    edges = [(u, v) for (u, v, d) in G.edges(data=True) if d['weight'] > threshold]
-    weights = [G[u][v]['weight'] for (u, v) in edges]
+#     # Draw nodes and edges with weights above threshold
+#     edges = [(u, v) for (u, v, d) in G.edges(data=True) if d['weight'] > threshold]
+#     weights = [G[u][v]['weight'] for (u, v) in edges]
     
-    nx.draw_networkx_nodes(G, pos, node_color='skyblue', node_size=50)
-    nx.draw_networkx_edges(G, pos, edgelist=edges, width=2, alpha=0.5, edge_color='gray')
-    nx.draw_networkx_labels(G, pos, font_size=8, font_family='sans-serif')
+#     nx.draw_networkx_nodes(G, pos, node_color='skyblue', node_size=50)
+#     nx.draw_networkx_edges(G, pos, edgelist=edges, width=2, alpha=0.5, edge_color='gray')
+#     nx.draw_networkx_labels(G, pos, font_size=8, font_family='sans-serif')
     
-    plt.title("Risk Factor Co-occurrence Network")
-    plt.axis('off')
-    plt.show()
+#     plt.title("Risk Factor Co-occurrence Network")
+#     plt.axis('off')
+#     plt.show()
 
 # Build the network
 # G = build_network(item_key='item 1a. ')

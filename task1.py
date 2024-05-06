@@ -330,7 +330,7 @@ def visualize_sentiments(company, results):
     """
     #for company, data in results.items():
     data = results[company]
-    fig, ax = plt.subplots(figsize=(15,4))
+    fig, ax = plt.subplots()
 
     years = list(data.keys())
     years.sort()
@@ -526,7 +526,7 @@ def keyword_tracking(company, keywords):
     # Plotting results
     # for company, keywords_data in results.items():
     keywords_data = results[company]
-    fig, ax = plt.subplot(figsize=(15, 4))
+    fig, ax = plt.subplot()
     for keyword, counts in keywords_data.items():
         counts.sort() 
         years = [year for year, count in counts]
@@ -556,7 +556,7 @@ def visualize_section_length(company, item_key):
     years = sorted(years_data.keys())
     lengths = [len(years_data[year][item_key]) if item_key in years_data[year] else 0 for year in years]
 
-    fig, ax = plt.subplot(figsize=(15, 5))
+    fig, ax = plt.subplot()
     plt.bar(years, lengths, color='skyblue')
     plt.title(f'Length of {item_key} over time for {company}')
     plt.xlabel('Year')

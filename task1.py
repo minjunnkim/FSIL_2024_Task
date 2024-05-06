@@ -204,9 +204,9 @@ def company_process(company):
     for root, dirs, files in os.walk(company_path):
         for file in files:
             file_path = os.path.join(root, file)
-            print(root)
-            print(dirs)
-            print(files)
+            # print(root)
+            # print(dirs)
+            # print(files)
             
             # Extract the portion of the full-submission.txt that contains the actual texts
             document = extract_10k_document(file_path)

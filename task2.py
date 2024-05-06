@@ -17,17 +17,21 @@ analysis_type = st.selectbox(
     index=0
 )
 
-if st.button('Analyze'):
-    if analysis_type == 'Keyword Tracking':
-        keywords = st.text_input("Enter keywords separated by commas", "cybersecurity, data privacy, sustainability")
-        keyword_list = [keyword.strip() for keyword in keywords.split(',')]
+if analysis_type == 'Keyword Tracking':
+    keywords = st.text_input("Enter keywords separated by commas", "cybersecurity, data privacy, sustainability")
+    keyword_list = [keyword.strip() for keyword in keywords.split(',')]
+
+    if st.button('Analyze'):
         fig = keyword_tracking(company, keyword_list) 
         st.pyplot(fig)
-    elif analysis_type == 'Visualize Section Length':
-        item_key = st.text_input("Enter the item key", "item 1a. ")
+elif analysis_type == 'Visualize Section Length':
+    item_key = st.text_input("Enter the item key", "item 1a. ")
+
+    if st.button('Analyze'):
         fig = visualize_section_length(company, item_key) 
         st.pyplot(fig)
-    elif analysis_type == 'Sentiment Analysis':
+elif analysis_type == 'Sentiment Analysis':
+    if st.button('Analyze'):
         results = analyze_company_data(company)
         fig = visualize_sentiments(company, results)
         st.pyplot(fig)

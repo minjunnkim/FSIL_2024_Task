@@ -4,14 +4,11 @@ from task1 import download_10k, keyword_tracking, visualize_section_length, anal
 def main():
     st.title('10-K Filing Analysis App')
 
-    company = st.text_input("Enter the company ticker (e.g., AAPL):").upper()
-
-    if st.button('Download 10-K Filing'):
-        if company:
-            download_10k(company)
-            st.success(f"Downloaded the latest 10-K filing for {company}")
-        else:
-            st.error("Please enter a valid company ticker.")
+    company = st.selectbox(
+        "Choose a company",
+        ['META', 'AAPL', 'MSFT', 'AMZN', 'GOOGL'],
+        index=0
+    )
 
     analysis_type = st.selectbox(
         "Select Analysis Type",

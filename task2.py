@@ -31,6 +31,8 @@ elif analysis_type == 'Visualize Section Length':
         'Item 12.', 'Item 13.', 'Item 14.', 'Item 15.', 'Item 16.'],
         index=0
     )
+    
+    item_key = item_key.lower() + " "
 
     if st.button('Analyze'):
         company_process(company)

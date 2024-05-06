@@ -155,7 +155,6 @@ def extract_items(document, company):
         item_content = document[start_index:end_index]
 
         items_dict[items[i]] = item_content
-        #items_dict[items[i]] = item_content[:20] + "..." + item_content[len(item_content)-20:]
 
     return items_dict
 
@@ -202,9 +201,6 @@ def company_process(company):
     for root, dirs, files in os.walk(company_path):
         for file in files:
             file_path = os.path.join(root, file)
-            # print(root)
-            # print(dirs)
-            # print(files)
             
             # Extract the portion of the full-submission.txt that contains the actual texts
             document = extract_10k_document(file_path)
@@ -297,7 +293,6 @@ def analyze_company_data(company):
     
     key_items = ['item 1. ', 'item 1a. ', 'item 7. ', 'item 7a. ', 'item 9. ', 'item 9a. ' ]
 
-    # for company, years_items in companies_dict.items():
     years_items = companies_dict[company]
     results[company] = {}
 
@@ -329,7 +324,6 @@ def visualize_sentiments(company, results):
     Return:
         Figure: figure for streamlit to plot
     """
-    #for company, data in results.items():
     data = results[company]
     fig = plt.figure(figsize=(15,4))
 
@@ -337,7 +331,6 @@ def visualize_sentiments(company, results):
     years.sort()
     print(years)
     
-    #sentiments = [1 if data[year][0] == 'POSITIVE' else -1 for year in years]
     confidences = [data[year] for year in years]
     
     plt.plot(years, confidences, label=f'{company} Sentiment', marker='o', linestyle='-', color='blue')
@@ -347,9 +340,6 @@ def visualize_sentiments(company, results):
     plt.grid(True)
     plt.legend()
     return fig
-
-# results = analyze_company_data()
-# visualize_sentiments(results)
 
 """
 Trend Analysis
@@ -517,7 +507,6 @@ def keyword_tracking(company, keywords):
     results = {company: {keyword: [] for keyword in keywords} for company in companies_dict}
     
     # Collect counts for each keyword by year
-    # for company, years_data in companies_dict.items():
     years_data = companies_dict[company]
 
     for year, data in years_data.items():
@@ -528,7 +517,6 @@ def keyword_tracking(company, keywords):
             results[company][keyword].append((int(year), count)) 
 
     # Plotting results
-    # for company, keywords_data in results.items():
     keywords_data = results[company]
     fig = plt.figure(figsize=(15,4))
     for keyword, counts in keywords_data.items():
@@ -543,10 +531,6 @@ def keyword_tracking(company, keywords):
     plt.legend()
     plt.grid(True)
     return fig
-    plt.show()
-
-# keywords = ['cybersecurity', 'data privacy', 'sustainability']
-# keyword_tracking(keywords)
 
 """
 Section Length Over Time
@@ -565,7 +549,6 @@ def visualize_section_length(company, item_key):
     Returns:
         Figure: figure for streamlit to plot
     """
-    #for company, years_data in companies_dict.items():
     years_data = companies_dict[company]
     years = sorted(years_data.keys())
     lengths = [len(years_data[year][item_key]) if item_key in years_data[year] else 0 for year in years]
@@ -576,6 +559,3 @@ def visualize_section_length(company, item_key):
     plt.xlabel('Year')
     plt.ylabel('Character Count')
     return fig
-    plt.show()
-
-# visualize_section_length('item 1a. ')
